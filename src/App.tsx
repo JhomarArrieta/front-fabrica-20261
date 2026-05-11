@@ -1,13 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login.js";
-
-function Dashboard() {
-  return (
-    <h1 style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      Dashboard (próximamente)
-    </h1>
-  );
-}
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import DetalleHogar from "./pages/DetalleHogar";
 
 function App() {
   return (
@@ -15,7 +10,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/hogares/:hogarId" element={<DetalleHogar />} />
       </Routes>
     </BrowserRouter>
   );
