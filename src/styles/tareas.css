@@ -1,0 +1,172 @@
+/* ── FILTROS ── */
+.tareas-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tareas-filters-left {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1.5px solid #d4cfc4;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #3a5c2a;
+}
+
+/* ── TAREA CARD ── */
+.tarea-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.tarea-card:last-child { margin-bottom: 0; }
+
+.tarea-info { flex: 1; min-width: 0; }
+
+.tarea-nombre {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a2e1a;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tarea-desc {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 10px;
+}
+
+.tarea-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tarea-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+
+.badge-pendiente   { background: #fef9c3; color: #854d0e; }
+.badge-en_proceso  { background: #dbeafe; color: #1e40af; }
+.badge-completada  { background: #dcfce7; color: #166534; }
+.badge-alta        { background: #fee2e2; color: #991b1b; }
+.badge-media       { background: #ffedd5; color: #9a3412; }
+.badge-baja        { background: #f0fdf4; color: #166534; }
+
+.tarea-fecha {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.tarea-asignado {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.tarea-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.btn-icon-edit   { background: #f3f4f6; color: #374151; }
+.btn-icon-edit:hover { background: #e5e7eb; }
+.btn-icon-delete { background: #fee2e2; color: #991b1b; }
+.btn-icon-delete:hover { background: #fecaca; }
+.btn-icon-next   { background: #ecfdf5; color: #166534; }
+.btn-icon-next:hover { background: #d1fae5; }
+
+/* ── EMPTY ── */
+.tareas-empty {
+  text-align: center;
+  padding: 40px;
+  color: #9ca3af;
+  font-size: 14px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+/* ── TABS ── */
+.tareas-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: #e5e1d8;
+  padding: 4px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+.tab-btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: transparent;
+  color: #6b7280;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: #fff;
+  color: #1a2e1a;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .tarea-card { flex-direction: column; }
+  .tarea-actions { width: 100%; justify-content: flex-end; }
+  .tareas-filters { flex-direction: column; align-items: stretch; }
+  .tareas-filters-left { flex-direction: column; }
+  .filter-select { width: 100%; }
+}

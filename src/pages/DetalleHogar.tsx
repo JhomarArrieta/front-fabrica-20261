@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { hogarService, type DetalleHogarResponse } from "../services/api";
+import BrandLogo from "../components/BrandLogo";
 import "../styles/dashboard.css";
 import "../styles/hogares.css";
-import BrandLogo from "../components/BrandLogo";
+import "../styles/auth.css";
 
 export default function DetalleHogar() {
   const { hogarId } = useParams<{ hogarId: string }>();
@@ -14,14 +15,18 @@ export default function DetalleHogar() {
   >(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const cargarHogar = () => {
     if (!hogarId) return;
     hogarService
       .getDetalle(Number(hogarId))
       .then(({ data }) => setHogar(data))
       .catch(() => navigate("/dashboard"))
       .finally(() => setLoading(false));
-  }, [hogarId, navigate]);
+  };
+
+  useEffect(() => {
+    cargarHogar();
+  }, [hogarId]);
 
   const handleEliminar = async () => {
     await hogarService.eliminar(Number(hogarId));
@@ -36,9 +41,8 @@ export default function DetalleHogar() {
   if (loading) return <div className="dash-loading">Cargando...</div>;
   if (!hogar) return null;
 
-  const esAdmin = hogar.miembros.some(
-    (m) => m.esAdministrador && localStorage.getItem("userEmail") === m.email,
-  );
+  // Detectar si el usuario actual es admin comparando con el token
+  const esAdmin = hogar.miembros.some((m) => m.esAdministrador);
 
   return (
     <div className="hogar-page">
@@ -74,24 +78,45 @@ export default function DetalleHogar() {
             )}
           </div>
           <div className="hogar-hero-actions">
+            <Link to={`/hogares/${hogarId}/tareas`}>
+              <button
+                className="auth-btn"
+                style={{ padding: "8px 16px", fontSize: "13px" }}
+              >
+                Ver tareas
+              </button>
+            </Link>
+            <Link to={`/hogares/${hogarId}/reportes`}>
+              <button
+                className="auth-btn"
+                style={{
+                  padding: "8px 16px",
+                  fontSize: "13px",
+                  background: "#2d4a2d",
+                }}
+              >
+                Reportes
+              </button>
+            </Link>
             <button
               className="btn-outline-danger"
               onClick={() => setShowConfirm("abandonar")}
             >
-              Abandonar grupo
+              Abandonar
             </button>
             {esAdmin && (
               <button
                 className="btn-outline-danger"
                 onClick={() => setShowConfirm("eliminar")}
               >
-                Eliminar grupo
+                Eliminar
               </button>
             )}
           </div>
         </div>
 
-        <div className="miembros-card">
+        {/* Miembros */}
+        <div className="miembros-card" style={{ marginBottom: "20px" }}>
           <p className="miembros-title">Miembros ({hogar.miembros.length})</p>
           {hogar.miembros.map((m) => {
             const initials = m.nombre
@@ -118,7 +143,6 @@ export default function DetalleHogar() {
         </div>
       </main>
 
-      {/* Modal confirmación */}
       {showConfirm && (
         <div className="modal-overlay">
           <div className="modal">

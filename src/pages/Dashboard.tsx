@@ -5,6 +5,7 @@ import {
   hogarService,
   solicitudService,
   type UsuarioResponse,
+  type MisSolicitudesResponse,
 } from "../services/api";
 import "../styles/dashboard.css";
 import "../styles/hogares.css";
@@ -24,6 +25,7 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [solicitudes, setSolicitudes] = useState<MisSolicitudesResponse[]>([]);
   const navigate = useNavigate();
 
   const cargarPerfil = () => {
@@ -35,6 +37,11 @@ export default function Dashboard() {
         navigate("/login");
       })
       .finally(() => setLoading(false));
+
+    solicitudService
+      .misSolicitudes()
+      .then(({ data }) => setSolicitudes(data))
+      .catch(() => {});
   };
 
   useEffect(() => {
@@ -260,6 +267,35 @@ export default function Dashboard() {
               <p className="dash-empty">No perteneces a ningún hogar aún</p>
             )}
           </div>
+          {/* Mis Solicitudes */}
+          {solicitudes.length > 0 && (
+            <div className="dash-card">
+              <p className="dash-card-title">
+                Mis solicitudes ({solicitudes.length})
+              </p>
+              {solicitudes.map((s) => (
+                <div key={s.id} className="dash-hogar-item">
+                  <div>
+                    <p className="dash-hogar-name">{s.hogar}</p>
+                    <p className="dash-hogar-rol">
+                      Enviada: {s.fechaSolicitud}
+                    </p>
+                  </div>
+                  <span
+                    className={`dash-badge ${
+                      s.estado === "ACEPTADA"
+                        ? ""
+                        : s.estado === "RECHAZADA"
+                          ? "dash-badge-member"
+                          : "dash-badge-pendiente"
+                    }`}
+                  >
+                    {s.estado}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </main>
 
