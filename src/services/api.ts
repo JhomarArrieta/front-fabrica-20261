@@ -121,6 +121,8 @@ export const hogarService = {
     api.post<HogarResponse>('/api/v1/hogares', { nombre }),
   getDetalle: (hogarId: number) =>
     api.get<DetalleHogarResponse>(`/api/v1/hogares/${hogarId}`),
+  actualizar: (hogarId: number, nombre: string, descripcion: string) =>
+    api.put<HogarResponse>(`/api/v1/hogares/${hogarId}`, { nombre, descripcion }),
   eliminar: (hogarId: number) =>
     api.delete(`/api/v1/hogares/${hogarId}`),
   abandonar: (hogarId: number) =>
@@ -176,5 +178,7 @@ export const reporteService = {
       params: { usuarioId, fechaInicio, fechaFin },
     }),
 };
+
+
 
 export default api;
